@@ -62,8 +62,13 @@ function! SyntaxCheckers_go_go_GetLocList() dict
         let opts = syntastic#util#var('go_go_test_args', s:go_new ? '-buildmode=archive' : '')
         let cleanup = 1
     endif
+    if executable('goapp')
+        let makeprgexe = 'goapp'
+    else
+        let makeprgexe = self.getExecEscaped()
+    endif
     let opt_str = (type(opts) != type('') || opts !=# '') ? join(syntastic#util#argsescape(opts)) : opts
-    let makeprg = self.getExecEscaped() . ' ' . cmd . ' ' . opt_str
+    let makeprg = makeprgexe . ' ' . cmd . ' ' . opt_str
 
     " The first pattern is for warnings from C compilers.
     let errorformat =
