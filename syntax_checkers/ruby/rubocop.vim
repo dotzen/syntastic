@@ -22,7 +22,11 @@ function! SyntaxCheckers_ruby_rubocop_IsAvailable() dict
     if !executable(self.getExec())
         return 0
     endif
-    return syntastic#util#versionIsAtLeast(self.getVersion(), [0, 12, 0])
+
+    let ver = syntastic#util#parseVersion(system(self.getExecEscaped() . ' --version 2>/dev/null'))
+    call self.log(self.getExec() . ' version =', ver)
+
+    return syntastic#util#versionIsAtLeast(ver, [0, 12, 0])
 endfunction
 
 function! SyntaxCheckers_ruby_rubocop_GetLocList() dict
