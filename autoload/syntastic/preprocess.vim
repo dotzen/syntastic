@@ -45,7 +45,7 @@ function! syntastic#preprocess#checkstyle(errors) abort " {{{2
                 let type = 'E'
             endif
 
-            let message = syntastic#util#decodeXMLEntities(matchstr(err, '\m\<message="\zs[^"]\+\ze"'))
+            let message = syntastic#util#decodeXMLEntities(matchstr(err, '\m\<message="\zs[^"]\+\ze"\?'))
 
             call add(out, join([fname, type, line, col, message], ':'))
         elseif match(err, '\m<file name="') > -1
